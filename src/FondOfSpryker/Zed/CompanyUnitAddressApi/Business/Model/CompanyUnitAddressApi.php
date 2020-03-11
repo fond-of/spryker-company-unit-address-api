@@ -121,7 +121,7 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
             $companyUnitAddressTransfer
         );
 
-        if ($companyUnitAddressTransfer === null) {
+        if ($companyUnitAddressTransfer->getAddress1() === null) {
             throw new EntityNotFoundException(sprintf(
                 'Company unit address not found for id %s',
                 $idCompanyUnitAddress
@@ -149,7 +149,7 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
             $companyUnitAddressTransfer
         );
 
-        if ($companyUnitAddressTransfer === null) {
+        if ($companyUnitAddressTransfer->getAddress1() === null) {
             throw new EntityNotFoundException(sprintf('Company unit address not found: %s', $idCompanyUnitAddress));
         }
 
