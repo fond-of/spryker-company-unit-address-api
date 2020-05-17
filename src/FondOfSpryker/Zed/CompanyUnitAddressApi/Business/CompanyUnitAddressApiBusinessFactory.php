@@ -35,8 +35,6 @@ class CompanyUnitAddressApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryContainerInterface
      */
     protected function getApiQueryContainer(): CompanyUnitAddressApiToApiQueryContainerInterface
@@ -45,8 +43,6 @@ class CompanyUnitAddressApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryBuilderQueryContainerInterface
      */
     protected function getApiQueryBuilderQueryContainer(): CompanyUnitAddressApiToApiQueryBuilderQueryContainerInterface
@@ -55,8 +51,6 @@ class CompanyUnitAddressApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\Facade\CompanyUnitAddressApiToCompanyUnitAddressFacadeInterface
      */
     protected function getCompanyFacade(): CompanyUnitAddressApiToCompanyUnitAddressFacadeInterface

@@ -175,8 +175,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testAdd(): void
@@ -214,8 +212,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testAddEntityNotSavedException(): void
@@ -256,8 +252,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testGet(): void
@@ -283,8 +277,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testGetEntityNotFoundException(): void
@@ -313,8 +305,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testUpdate(): void
@@ -361,8 +351,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testUpdateEntityNotFoundException(): void
@@ -392,8 +380,6 @@ class CompanyUnitAddressApiTest extends Unit
     }
 
     /**
-     * @throws
-     *
      * @return void
      */
     public function testUpdateEntityNotSavedException(): void

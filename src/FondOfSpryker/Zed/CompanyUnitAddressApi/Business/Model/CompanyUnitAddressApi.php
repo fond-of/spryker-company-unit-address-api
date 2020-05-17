@@ -198,8 +198,6 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @throws
-     *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer): ApiCollectionTransfer
@@ -248,8 +246,6 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
     }
 
     /**
-     * @throws
-     *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
      */
     protected function buildColumnSelection(): PropelQueryBuilderColumnSelectionTransfer
@@ -275,7 +271,7 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Generated\Shared\Transfer\ApiCollectionTransfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     protected function addPagination(
         ModelCriteria $query,
