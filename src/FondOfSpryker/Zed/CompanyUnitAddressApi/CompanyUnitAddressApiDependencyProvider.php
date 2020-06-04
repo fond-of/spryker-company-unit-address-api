@@ -2,8 +2,6 @@
 
 namespace FondOfSpryker\Zed\CompanyUnitAddressApi;
 
-use FondOfSpryker\Zed\CompanyApi\Dependency\QueryContainer\CompanyApiToApiQueryBuilderQueryContainerBridge;
-use FondOfSpryker\Zed\CompanyApi\Dependency\QueryContainer\CompanyApiToApiQueryContainerBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\Facade\CompanyUnitAddressApiToCompanyUnitAddressFacadeBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryBuilderQueryContainerBridge;
 use FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryContainerBridge;
@@ -55,7 +53,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCompanyUnitAddressFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_UNIT_ADDRESS] = function (Container $container) {
+        $container[static::FACADE_COMPANY_UNIT_ADDRESS] = static function (Container $container) {
             return new CompanyUnitAddressApiToCompanyUnitAddressFacadeBridge(
                 $container->getLocator()->companyUnitAddress()->facade()
             );
@@ -71,7 +69,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCompanyUnitAddressPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_UNIT_ADDRESS] = function () {
+        $container[static::PROPEL_QUERY_COMPANY_UNIT_ADDRESS] = static function () {
             return SpyCompanyUnitAddressQuery::create();
         };
 
@@ -85,7 +83,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addApiQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_API] = static function (Container $container) {
             return new CompanyUnitAddressApiToApiQueryContainerBridge($container->getLocator()->api()->queryContainer());
         };
 
@@ -99,7 +97,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addApiQueryBuilderQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = static function (Container $container) {
             return new CompanyUnitAddressApiToApiQueryBuilderQueryContainerBridge(
                 $container->getLocator()->apiQueryBuilder()->queryContainer()
             );
