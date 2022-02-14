@@ -96,12 +96,12 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
         }
 
         $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById(
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         return $this->apiQueryContainer->createApiItem(
             $companyUnitAddressTransfer,
-            $companyUnitAddressTransfer->getIdCompanyUnitAddress()
+            $companyUnitAddressTransfer->getIdCompanyUnitAddress(),
         );
     }
 
@@ -118,13 +118,13 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
             ->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById(
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         if ($companyUnitAddressTransfer->getAddress1() === null) {
             throw new EntityNotFoundException(sprintf(
                 'Company unit address not found for id %s',
-                $idCompanyUnitAddress
+                $idCompanyUnitAddress,
             ));
         }
 
@@ -146,7 +146,7 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
             ->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById(
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         if ($companyUnitAddressTransfer->getAddress1() === null) {
@@ -154,29 +154,21 @@ class CompanyUnitAddressApi implements CompanyUnitAddressApiInterface
         }
 
         $data = (array)$apiDataTransfer->getData();
-        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())
-            ->fromArray($data, true)
-            ->setIdCompanyUnitAddress($idCompanyUnitAddress);
+        $companyUnitAddressTransfer = $companyUnitAddressTransfer->fromArray($data, true);
 
         $companyUnitAddressResponseTransfer = $this->companyUnitAddressFacade->update($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer();
 
-        if (!$companyUnitAddressResponseTransfer->getIsSuccessful()) {
-            $errors = [];
-
-            foreach ($companyUnitAddressResponseTransfer->getMessages() as $message) {
-                $errors[] = $message->getText();
-            }
-
-            throw new EntityNotSavedException('Could not update company unit address: ' . implode(',', $errors));
+        if ($companyUnitAddressTransfer === null || !$companyUnitAddressResponseTransfer->getIsSuccessful()) {
+            throw new EntityNotSavedException(
+                'Could not update company unit address',
+                ApiConfig::HTTP_CODE_INTERNAL_ERROR,
+            );
         }
-
-        $companyUnitAddressTransfer = $this->companyUnitAddressFacade->getCompanyUnitAddressById(
-            $companyUnitAddressTransfer
-        );
 
         return $this->apiQueryContainer->createApiItem(
             $companyUnitAddressTransfer,
-            $companyUnitAddressTransfer->getIdCompanyUnitAddress()
+            $companyUnitAddressTransfer->getIdCompanyUnitAddress(),
         );
     }
 
