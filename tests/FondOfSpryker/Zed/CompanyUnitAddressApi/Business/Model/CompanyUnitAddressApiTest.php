@@ -27,27 +27,27 @@ class CompanyUnitAddressApiTest extends Unit
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryContainerInterface
      */
-    protected $companyUnitAddressApiToApiQueryContainerInterfaceMock;
+    protected $apiQueryContainerMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\QueryContainer\CompanyUnitAddressApiToApiQueryBuilderQueryContainerInterface
      */
-    protected $companyUnitAddressApiToApiQueryBuilderQueryContainerInterfaceMock;
+    protected $apiQueryBuilderQueryContainerMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressApi\Persistence\CompanyUnitAddressApiQueryContainerInterface
      */
-    protected $companyUnitAddressApiQueryContainerInterfaceMock;
+    protected $queryContainerMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressApi\Dependency\Facade\CompanyUnitAddressApiToCompanyUnitAddressFacadeInterface
      */
-    protected $companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock;
+    protected $companyUnitAddressFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUnitAddressApi\Business\Mapper\TransferMapperInterface
      */
-    protected $transferMapperInterfaceMock;
+    protected $transferMapperMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\ApiDataTransfer
@@ -109,23 +109,23 @@ class CompanyUnitAddressApiTest extends Unit
      */
     protected function _before(): void
     {
-        $this->companyUnitAddressApiToApiQueryContainerInterfaceMock = $this->getMockBuilder(CompanyUnitAddressApiToApiQueryContainerInterface::class)
+        $this->apiQueryContainerMock = $this->getMockBuilder(CompanyUnitAddressApiToApiQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUnitAddressApiToApiQueryBuilderQueryContainerInterfaceMock = $this->getMockBuilder(CompanyUnitAddressApiToApiQueryBuilderQueryContainerInterface::class)
+        $this->apiQueryBuilderQueryContainerMock = $this->getMockBuilder(CompanyUnitAddressApiToApiQueryBuilderQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUnitAddressApiQueryContainerInterfaceMock = $this->getMockBuilder(CompanyUnitAddressApiQueryContainerInterface::class)
+        $this->queryContainerMock = $this->getMockBuilder(CompanyUnitAddressApiQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock = $this->getMockBuilder(CompanyUnitAddressApiToCompanyUnitAddressFacadeInterface::class)
+        $this->companyUnitAddressFacadeMock = $this->getMockBuilder(CompanyUnitAddressApiToCompanyUnitAddressFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->transferMapperInterfaceMock = $this->getMockBuilder(TransferMapperInterface::class)
+        $this->transferMapperMock = $this->getMockBuilder(TransferMapperInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -166,11 +166,11 @@ class CompanyUnitAddressApiTest extends Unit
         $this->address1 = 'address-1';
 
         $this->companyUnitAddressApi = new CompanyUnitAddressApi(
-            $this->companyUnitAddressApiToApiQueryContainerInterfaceMock,
-            $this->companyUnitAddressApiToApiQueryBuilderQueryContainerInterfaceMock,
-            $this->companyUnitAddressApiQueryContainerInterfaceMock,
-            $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock,
-            $this->transferMapperInterfaceMock
+            $this->apiQueryContainerMock,
+            $this->apiQueryBuilderQueryContainerMock,
+            $this->queryContainerMock,
+            $this->companyUnitAddressFacadeMock,
+            $this->transferMapperMock
         );
     }
 
@@ -179,31 +179,31 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testAdd(): void
     {
-        $this->apiDataTransferMock->expects($this->atLeastOnce())
+        $this->apiDataTransferMock->expects(static::atLeastOnce())
             ->method('getData')
             ->willReturn($this->transferData);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('create')
             ->willReturn($this->companyUnitAddressResponseTransferMock);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
             ->method('getIsSuccessful')
             ->willReturn(true);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('getCompanyUnitAddressById')
             ->willReturn($this->companyUnitAddressTransferMock);
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getIdCompanyUnitAddress')
             ->willReturn($this->idCompanyUnitAddress);
 
-        $this->companyUnitAddressApiToApiQueryContainerInterfaceMock->expects($this->atLeastOnce())
+        $this->apiQueryContainerMock->expects(static::atLeastOnce())
             ->method('createApiItem')
             ->willReturn($this->apiItemTransferMock);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ApiItemTransfer::class,
             $this->companyUnitAddressApi->add(
                 $this->apiDataTransferMock
@@ -216,35 +216,35 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testAddEntityNotSavedException(): void
     {
-        $this->apiDataTransferMock->expects($this->atLeastOnce())
+        $this->apiDataTransferMock->expects(static::atLeastOnce())
             ->method('getData')
             ->willReturn($this->transferData);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('create')
             ->willReturn($this->companyUnitAddressResponseTransferMock);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
             ->method('getIsSuccessful')
             ->willReturn(false);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
             ->method('getMessages')
             ->willReturn($this->responseMessageTransferMocks);
 
-        $this->responseMessageTransferMock->expects($this->atLeastOnce())
+        $this->responseMessageTransferMock->expects(static::atLeastOnce())
             ->method('getText')
             ->willReturn($this->errorText);
 
         try {
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 ApiItemTransfer::class,
                 $this->companyUnitAddressApi->add(
                     $this->apiDataTransferMock
                 )
             );
         } catch (EntityNotSavedException $e) {
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 EntityNotSavedException::class,
                 $e
             );
@@ -256,19 +256,19 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testGet(): void
     {
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('getCompanyUnitAddressById')
             ->willReturn($this->companyUnitAddressTransferMock);
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getAddress1')
             ->willReturn($this->address1);
 
-        $this->companyUnitAddressApiToApiQueryContainerInterfaceMock->expects($this->atLeastOnce())
+        $this->apiQueryContainerMock->expects(static::atLeastOnce())
             ->method('createApiItem')
             ->willReturn($this->apiItemTransferMock);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ApiItemTransfer::class,
             $this->companyUnitAddressApi->get(
                 $this->idCompanyUnitAddress
@@ -281,23 +281,23 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testGetEntityNotFoundException(): void
     {
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('getCompanyUnitAddressById')
             ->willReturn($this->companyUnitAddressTransferMock);
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getAddress1')
             ->willReturn(null);
 
         try {
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 ApiItemTransfer::class,
                 $this->companyUnitAddressApi->get(
                     $this->idCompanyUnitAddress
                 )
             );
         } catch (EntityNotFoundException $e) {
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 EntityNotFoundException::class,
                 $e
             );
@@ -309,44 +309,59 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testUpdate(): void
     {
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
-            ->method('getCompanyUnitAddressById')
-            ->willReturn($this->companyUnitAddressTransferMock);
+        $idCompanyUnitAddress = 1;
+        $data = [];
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
+            ->method('getCompanyUnitAddressById')
+            ->with(
+                static::callback(
+                    static function (
+                        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+                    ) use ($idCompanyUnitAddress) {
+                        return $companyUnitAddressTransfer->getIdCompanyUnitAddress() === $idCompanyUnitAddress;
+                    }
+                )
+            )->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getAddress1')
             ->willReturn($this->address1);
 
-        $this->apiDataTransferMock->expects($this->atLeastOnce())
+        $this->apiDataTransferMock->expects(static::atLeastOnce())
             ->method('getData')
-            ->willReturn($this->transferData);
+            ->willReturn($data);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
+            ->method('fromArray')
+            ->with($data, true)
+            ->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('update')
+            ->with($this->companyUnitAddressTransferMock)
             ->willReturn($this->companyUnitAddressResponseTransferMock);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
+            ->method('getCompanyUnitAddressTransfer')
+            ->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
             ->method('getIsSuccessful')
             ->willReturn(true);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
-            ->method('getCompanyUnitAddressById')
-            ->willReturn($this->companyUnitAddressTransferMock);
-
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getIdCompanyUnitAddress')
-            ->willReturn($this->idCompanyUnitAddress);
+            ->willReturn($idCompanyUnitAddress);
 
-        $this->companyUnitAddressApiToApiQueryContainerInterfaceMock->expects($this->atLeastOnce())
+        $this->apiQueryContainerMock->expects(static::atLeastOnce())
             ->method('createApiItem')
+            ->with($this->companyUnitAddressTransferMock, $idCompanyUnitAddress)
             ->willReturn($this->apiItemTransferMock);
 
-        $this->assertInstanceOf(
-            ApiItemTransfer::class,
-            $this->companyUnitAddressApi->update(
-                $this->idCompanyUnitAddress,
-                $this->apiDataTransferMock
-            )
+        static::assertEquals(
+            $this->apiItemTransferMock,
+            $this->companyUnitAddressApi->update($idCompanyUnitAddress, $this->apiDataTransferMock)
         );
     }
 
@@ -355,27 +370,31 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testUpdateEntityNotFoundException(): void
     {
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
-            ->method('getCompanyUnitAddressById')
-            ->willReturn($this->companyUnitAddressTransferMock);
+        $idCompanyUnitAddress = 1;
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
+            ->method('getCompanyUnitAddressById')
+            ->with(
+                static::callback(
+                    static function (
+                        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+                    ) use ($idCompanyUnitAddress) {
+                        return $companyUnitAddressTransfer->getIdCompanyUnitAddress() === $idCompanyUnitAddress;
+                    }
+                )
+            )->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getAddress1')
             ->willReturn(null);
 
         try {
-            $this->assertInstanceOf(
-                ApiItemTransfer::class,
-                $this->companyUnitAddressApi->update(
-                    $this->idCompanyUnitAddress,
-                    $this->apiDataTransferMock
-                )
+            $this->companyUnitAddressApi->update(
+                $this->idCompanyUnitAddress,
+                $this->apiDataTransferMock
             );
+            static::fail();
         } catch (EntityNotFoundException $e) {
-            $this->assertInstanceOf(
-                EntityNotFoundException::class,
-                $e
-            );
         }
     }
 
@@ -384,47 +403,53 @@ class CompanyUnitAddressApiTest extends Unit
      */
     public function testUpdateEntityNotSavedException(): void
     {
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
-            ->method('getCompanyUnitAddressById')
-            ->willReturn($this->companyUnitAddressTransferMock);
+        $idCompanyUnitAddress = 1;
+        $data = [];
 
-        $this->companyUnitAddressTransferMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
+            ->method('getCompanyUnitAddressById')
+            ->with(
+                static::callback(
+                    static function (
+                        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+                    ) use ($idCompanyUnitAddress) {
+                        return $companyUnitAddressTransfer->getIdCompanyUnitAddress() === $idCompanyUnitAddress;
+                    }
+                )
+            )->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
             ->method('getAddress1')
             ->willReturn($this->address1);
 
-        $this->apiDataTransferMock->expects($this->atLeastOnce())
+        $this->apiDataTransferMock->expects(static::atLeastOnce())
             ->method('getData')
-            ->willReturn($this->transferData);
+            ->willReturn($data);
 
-        $this->companyUnitAddressApiToCompanyUnitAddressFacadeInterfaceMock->expects($this->atLeastOnce())
+        $this->companyUnitAddressTransferMock->expects(static::atLeastOnce())
+            ->method('fromArray')
+            ->with($data, true)
+            ->willReturn($this->companyUnitAddressTransferMock);
+
+        $this->companyUnitAddressFacadeMock->expects(static::atLeastOnce())
             ->method('update')
+            ->with($this->companyUnitAddressTransferMock)
             ->willReturn($this->companyUnitAddressResponseTransferMock);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
-            ->method('getIsSuccessful')
-            ->willReturn(false);
+        $this->companyUnitAddressResponseTransferMock->expects(static::atLeastOnce())
+            ->method('getCompanyUnitAddressTransfer')
+            ->willReturn(null);
 
-        $this->companyUnitAddressResponseTransferMock->expects($this->atLeastOnce())
-            ->method('getMessages')
-            ->willReturn($this->responseMessageTransferMocks);
-
-        $this->responseMessageTransferMock->expects($this->atLeastOnce())
-            ->method('getText')
-            ->willReturn($this->errorText);
+        $this->companyUnitAddressResponseTransferMock->expects(static::never())
+            ->method('getIsSuccessful');
 
         try {
-            $this->assertInstanceOf(
-                ApiItemTransfer::class,
-                $this->companyUnitAddressApi->update(
-                    $this->idCompanyUnitAddress,
-                    $this->apiDataTransferMock
-                )
+            $this->companyUnitAddressApi->update(
+                $this->idCompanyUnitAddress,
+                $this->apiDataTransferMock
             );
+            static::fail();
         } catch (EntityNotSavedException $e) {
-            $this->assertInstanceOf(
-                EntityNotSavedException::class,
-                $e
-            );
         }
     }
 
@@ -434,11 +459,11 @@ class CompanyUnitAddressApiTest extends Unit
     public function testRemove(): void
     {
 
-        $this->companyUnitAddressApiToApiQueryContainerInterfaceMock->expects($this->atLeastOnce())
+        $this->apiQueryContainerMock->expects(static::atLeastOnce())
             ->method('createApiItem')
             ->willReturn($this->apiItemTransferMock);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ApiItemTransfer::class,
             $this->companyUnitAddressApi->remove(
                 $this->idCompanyUnitAddress

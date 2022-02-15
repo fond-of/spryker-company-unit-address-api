@@ -11,9 +11,24 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_UNIT_ADDRESS = 'PROPEL_QUERY_COMPANY_UNIT_ADDRESS';
+
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
 
     /**
@@ -55,7 +70,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::FACADE_COMPANY_UNIT_ADDRESS] = static function (Container $container) {
             return new CompanyUnitAddressApiToCompanyUnitAddressFacadeBridge(
-                $container->getLocator()->companyUnitAddress()->facade()
+                $container->getLocator()->companyUnitAddress()->facade(),
             );
         };
 
@@ -99,7 +114,7 @@ class CompanyUnitAddressApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = static function (Container $container) {
             return new CompanyUnitAddressApiToApiQueryBuilderQueryContainerBridge(
-                $container->getLocator()->apiQueryBuilder()->queryContainer()
+                $container->getLocator()->apiQueryBuilder()->queryContainer(),
             );
         };
 
